@@ -1,4 +1,4 @@
-package com.github.pgycode.wanandroid.home.act
+package com.github.pgycode.wanandroid.blog.act
 
 import android.os.Bundle
 import android.webkit.WebChromeClient
@@ -6,7 +6,7 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.TextView
 import com.github.pgycode.wanandroid.common.BaseActivity
-import com.github.pgycode.wanandroid.home.R
+import com.github.pgycode.wanandroid.blog.R
 import kotlinx.android.synthetic.main.act_web.*
 
 /**

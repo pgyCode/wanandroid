@@ -1,4 +1,4 @@
-package com.github.pgycode.wanandroid.home.act
+package com.github.pgycode.wanandroid.blog.act
 
 import android.content.Intent
 import android.os.Bundle
@@ -13,9 +13,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.github.pgycode.wanandroid.common.BaseActivity
 import com.github.pgycode.wanandroid.common.GlideUtil
-import com.github.pgycode.wanandroid.home.R
-import com.github.pgycode.wanandroid.home.frg.HomeFragment
-import com.github.pgycode.wanandroid.home.vm.PrjVM
+import com.github.pgycode.wanandroid.blog.R
+import com.github.pgycode.wanandroid.blog.frg.HomeFragment
+import com.github.pgycode.wanandroid.blog.vm.PrjVM
 import com.scwang.smartrefresh.layout.SmartRefreshLayout
 import kotlinx.android.synthetic.main.item_prj.*
 import kotlinx.android.synthetic.main.item_prj.view.*

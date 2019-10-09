@@ -8,6 +8,20 @@
         android:layout_width="match_parent"
         android:background="#B8B3B3"
         android:paddingRight="10dp"
+        android:layout_height="50dp"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/list_two"
+        android:layout_width="match_parent"
+        android:background="#B8B3B3"
+        android:paddingRight="10dp"
+        android:layout_height="50dp"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/list_three"
+        android:layout_width="match_parent"
+        android:background="#B8B3B3"
+        android:paddingRight="10dp"
         android:layout_height="match_parent"/>
 
 </LinearLayout>

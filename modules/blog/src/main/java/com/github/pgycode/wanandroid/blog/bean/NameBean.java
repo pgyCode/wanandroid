@@ -1,4 +1,4 @@
-package com.github.pgycode.wanandroid.home.bean;
+package com.github.pgycode.wanandroid.blog.bean;
 
 import java.util.List;
 

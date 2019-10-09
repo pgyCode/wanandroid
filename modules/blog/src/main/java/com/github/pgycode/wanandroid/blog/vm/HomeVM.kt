@@ -1,11 +1,13 @@
-package com.github.pgycode.wanandroid.home.vm
+package com.github.pgycode.wanandroid.blog.vm
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.github.pgycode.wanandroid.blog.bean.BlogBean
 import com.github.pgycode.wanandroid.common.NetRequest
 import com.github.pgycode.wanandroid.common.ThreadPool
-import com.github.pgycode.wanandroid.home.bean.NameBean
-import com.github.pgycode.wanandroid.home.bean.PrjBean
+import com.github.pgycode.wanandroid.blog.bean.NameBean
+import com.github.pgycode.wanandroid.blog.bean.PrjBean
+import com.github.pgycode.wanandroid.blog.bean.PrjBotBean
 
 /**
  * @author: xuxiaojie
@@ -14,44 +16,28 @@ class HomeVM: ViewModel() {
 
     val ldRefresh: MutableLiveData<Void> = MutableLiveData()
 
-    val ldLoaderMore: MutableLiveData<Boolean> = MutableLiveData()
+    val data: ArrayList<BlogBean.DataBean> = ArrayList()
+    val dataBot: ArrayList<PrjBotBean.DataBean.DatasBean> = ArrayList()
 
-    val ldState: MutableLiveData<Int> = MutableLiveData()
+    var page = 0
 
-    val data: ArrayList<PrjBean.DataBean.DatasBean> = ArrayList()
-
-    val prj: ArrayList<NameBean.DataBean> = ArrayList()
-
-    var page = 0;
+    var cId = 0
 
     fun init() {
         ThreadPool.network.execute {
-            // 加载中
-            ldState.postValue(0)
             // 请求网络
-            val nameBean = NetRequest.get("https://www.wanandroid.com/project/tree/json",
-                NameBean::class.java)
-            val prjBean = NetRequest.get(
-                "https://wanandroid.com/article/listproject/0/json",
-                PrjBean::class.java)
+            val blogBean = NetRequest.get("https://www.wanandroid.com/tree/json",
+                BlogBean::class.java)
 
             var success = false
-            prjBean?.data?.datas?.let {
+            blogBean?.data?.let {
                 data.addAll(it)
                 success = true
                 page++
             }
 
-            nameBean?.data?.let {
-                prj.addAll(it)
-                success = true
-            }
-
             if (success) {
-                ldState.postValue(1)
                 ldRefresh.postValue(null)
-            } else {
-                ldState.postValue(-1)
             }
         }
     }
@@ -59,19 +45,19 @@ class HomeVM: ViewModel() {
     fun load() {
         ThreadPool.network.execute {
             // 请求网络
-            val prjBean = NetRequest.get(
-                "https://wanandroid.com/article/listproject/$page/json",
-                PrjBean::class.java)
+            val prjBotBean = NetRequest.get("https://www.wanandroid.com/article/list/$page/json?cid=$cId",
+                PrjBotBean::class.java)
 
-            prjBean?.data?.datas?.let {
-                data.addAll(it)
-                ldRefresh.postValue(null)
-                ldLoaderMore.postValue(true)
+            var success = false
+            prjBotBean?.data?.datas?.let {
+                dataBot.addAll(it)
+                success = true
                 page++
-                return@execute
             }
-            ldLoaderMore.postValue(false)
+
+            if (success) {
+                ldRefresh.postValue(null)
+            }
         }
     }
-
 }
