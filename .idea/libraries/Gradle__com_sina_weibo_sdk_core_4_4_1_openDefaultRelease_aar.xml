@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: com.sina.weibo.sdk:core:4.4.1:openDefaultRelease@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/ba3df9de818258dd8faf172d21389014/core-4.4.1-openDefaultRelease/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/ba3df9de818258dd8faf172d21389014/core-4.4.1-openDefaultRelease/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/ba3df9de818258dd8faf172d21389014/core-4.4.1-openDefaultRelease/jars/libs/ssosdk.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

@@ -1,0 +1,156 @@
+package com.github.pgycode.wanandroid.home.vm
+
+import android.view.View
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import com.github.pgycode.wanandroid.common.NetRequest
+import com.github.pgycode.wanandroid.common.ThreadPool
+import com.github.pgycode.wanandroid.home.bean.NameBean
+import com.github.pgycode.wanandroid.home.bean.PrjBean
+import com.github.pgycode.wanandroid.home.bean.PrjTopBean
+import java.util.concurrent.CopyOnWriteArrayList
+
+/**
+ * @author: xuxiaojie
+ */
+class HomeVM: ViewModel() {
+
+    val ldOuterLoadingVisiable: MutableLiveData<Int> = MutableLiveData()
+    val ldOuterFailedVisiable: MutableLiveData<Int> = MutableLiveData()
+    val ldInnerLoadingVisiable: MutableLiveData<Int> = MutableLiveData()
+    val ldRefreshLayoutVisiable: MutableLiveData<Int> = MutableLiveData()
+    val ldInnerFailedVisiable: MutableLiveData<Int> = MutableLiveData()
+    val ldOutContainerVisiable: MutableLiveData<Int> = MutableLiveData()
+
+    val ldTabRefresh: MutableLiveData<Void> = MutableLiveData()
+    val ldListRefresh: MutableLiveData<Void> = MutableLiveData()
+
+    val ldRefreshLayoutStopPullUpLoad: MutableLiveData<Void> = MutableLiveData()
+    val ldRefreshLayoutStopPullDownRefresh: MutableLiveData<Void> = MutableLiveData()
+
+    val data: ArrayList<PrjBean.DataBean.DatasBean> = ArrayList()
+
+    val prj: CopyOnWriteArrayList<NameBean.DataBean> = CopyOnWriteArrayList()
+
+    var page = 1
+
+    var cid = 0
+
+    /**
+     * 行为：初始化
+     */
+    fun init() {
+        ThreadPool.network.execute {
+            // 加载中
+            ldOutContainerVisiable.postValue(View.GONE)
+            ldOuterFailedVisiable.postValue(View.GONE)
+            ldOuterLoadingVisiable.postValue(View.VISIBLE)
+
+            // 加载顶部数据
+            val nameBean = NetRequest.get(
+                "https://www.wanandroid.com/project/tree/json",
+                NameBean::class.java)
+
+            if (nameBean?.data != null) {
+                prj.addAll(nameBean.data)
+            } else {
+                ldOuterFailedVisiable.postValue(View.VISIBLE)
+                ldOuterLoadingVisiable.postValue(View.GONE)
+            }
+
+            // 加载下面数据
+            nameBean?.data?.get(0)?.id?.let {id ->
+                cid = id
+                // 请求网络
+                val prjBean = NetRequest.get(
+                    "https://www.wanandroid.com/project/list/$page/json?cid=$cid",
+                    PrjBean::class.java)
+
+                if (prjBean?.data?.datas != null) {
+                    data.clear()
+                    data.addAll(prjBean.data.datas)
+                    page++
+                } else {
+                    ldOuterFailedVisiable.postValue(View.VISIBLE)
+                    ldOuterLoadingVisiable.postValue(View.GONE)
+                    return@execute
+                }
+            }
+            ldTabRefresh.postValue(null)
+            ldListRefresh.postValue(null)
+            ldOuterLoadingVisiable.postValue(View.GONE)
+            ldOutContainerVisiable.postValue(View.VISIBLE)
+        }
+    }
+
+    /**
+     * 行为：上拉加载
+     */
+    fun load() {
+        ThreadPool.network.execute {
+            // 请求网络
+            println("xuxiaojie " + page)
+            val prjBean = NetRequest.get(
+                "https://www.wanandroid.com/project/list/$page/json?cid=$cid",
+                PrjBean::class.java)
+
+            if (prjBean?.data?.datas != null) {
+                data.addAll(prjBean.data.datas)
+                ldListRefresh.postValue(null)
+                page++
+            }
+            ldRefreshLayoutStopPullUpLoad.postValue(null)
+        }
+    }
+
+    /**
+     * 行为：下拉刷新
+     */
+    fun downRefresh() {
+        ThreadPool.network.execute {
+            page = 1
+            // 请求网络
+            val prjBean = NetRequest.get(
+                "https://www.wanandroid.com/project/list/$page/json?cid=$cid",
+                PrjBean::class.java)
+            if (prjBean?.data?.datas != null) {
+                data.clear()
+                data.addAll(prjBean.data.datas)
+                ldListRefresh.postValue(null)
+                page++
+            }
+            ldRefreshLayoutStopPullDownRefresh.postValue(null)
+        }
+    }
+
+    /**
+     * 行为：切换标签
+     */
+    fun checkTab(poi: Int) {
+        ThreadPool.network.execute {
+            data.clear()
+            ldListRefresh.postValue(null)
+            cid = prj[poi]?.id?: 0
+            page = 1
+
+            ldInnerFailedVisiable.postValue(View.GONE)
+            ldInnerLoadingVisiable.postValue(View.VISIBLE)
+            ldRefreshLayoutVisiable.postValue(View.GONE)
+
+            // 请求网络
+            val prjBean = NetRequest.get(
+                "https://www.wanandroid.com/project/list/$page/json?cid=$cid",
+                PrjBean::class.java)
+            if (prjBean?.data?.datas != null) {
+                data.clear()
+                data.addAll(prjBean.data.datas)
+                ldListRefresh.postValue(null)
+                ldRefreshLayoutVisiable.postValue(View.VISIBLE)
+                page++
+            } else {
+                ldInnerFailedVisiable.postValue(View.VISIBLE)
+            }
+            ldInnerLoadingVisiable.postValue(View.GONE)
+        }
+    }
+}
