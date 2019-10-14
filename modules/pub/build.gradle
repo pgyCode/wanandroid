@@ -9,7 +9,7 @@ android {
 
 
     defaultConfig {
-        applicationId "com.github.pgycode.wanandroid.blog"
+        applicationId "com.github.pgycode.wanandroid.pub"
         minSdkVersion 21
         targetSdkVersion 29
         versionCode 1
@@ -42,7 +42,7 @@ dependencies {
 
 android {
     aaptOptions {
-        additionalParameters '--package-id', '0x81'
+        additionalParameters '--package-id', '0x82'
     }
 }
 

@@ -1,2 +1,2 @@
-include ':app', ':modules', 'modules:blog', 'modules:home', 'modules:common', 'modules:plugin'
+include ':app', ':modules', 'modules:nav', 'modules:pub', 'modules:blog', 'modules:home', 'modules:common', 'modules:plugin'
 rootProject.name='WeiBo'

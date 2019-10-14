@@ -17,14 +17,6 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"/>
 
-        <com.androidkun.xtablayout.XTabLayout
-            android:id="@+id/tab_second"
-            android:background="#2196F3"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"/>
-
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">

@@ -1,12 +1,12 @@
-package com.github.pgycode.wanandroid.blog.vm
+package com.github.pgycode.wanandroid.pub.vm
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.github.pgycode.wanandroid.common.NetRequest
 import com.github.pgycode.wanandroid.common.ThreadPool
-import com.github.pgycode.wanandroid.blog.bean.NameBean
-import com.github.pgycode.wanandroid.blog.bean.PrjBean
-import com.github.pgycode.wanandroid.blog.bean.PrjTopBean
+import com.github.pgycode.wanandroid.pub.bean.NameBean
+import com.github.pgycode.wanandroid.pub.bean.PrjBean
+import com.github.pgycode.wanandroid.pub.bean.PrjTopBean
 
 /**
  * @author: xuxiaojie

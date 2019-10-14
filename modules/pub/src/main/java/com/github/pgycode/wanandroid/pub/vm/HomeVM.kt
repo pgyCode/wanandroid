@@ -1,14 +1,11 @@
-package com.github.pgycode.wanandroid.blog.vm
+package com.github.pgycode.wanandroid.pub.vm
 
 import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.github.pgycode.wanandroid.blog.bean.BlogBean
 import com.github.pgycode.wanandroid.common.NetRequest
 import com.github.pgycode.wanandroid.common.ThreadPool
-import com.github.pgycode.wanandroid.blog.bean.NameBean
-import com.github.pgycode.wanandroid.blog.bean.PrjBean
-import com.github.pgycode.wanandroid.blog.bean.PrjBotBean
+import com.github.pgycode.wanandroid.pub.bean.*
 import java.util.concurrent.CopyOnWriteArrayList
 
 /**
@@ -31,7 +28,7 @@ class HomeVM: ViewModel() {
 
     val data: ArrayList<PrjBotBean.DataBean.DatasBean> = ArrayList()
 
-    val prj: CopyOnWriteArrayList<BlogBean.DataBean> = CopyOnWriteArrayList()
+    val prj: CopyOnWriteArrayList<PubBean.DataBean> = CopyOnWriteArrayList()
 
     var page = 0
 
@@ -50,12 +47,12 @@ class HomeVM: ViewModel() {
             ldOuterLoadingVisiable.postValue(View.VISIBLE)
 
             // 加载顶部数据
-            val blogBean = NetRequest.get(
-                "https://www.wanandroid.com/tree/json",
-                BlogBean::class.java)
+            val pubBean = NetRequest.get(
+                "https://wanandroid.com/wxarticle/chapters/json",
+                PubBean::class.java)
 
-            if (blogBean?.data != null) {
-                prj.addAll(blogBean.data)
+            if (pubBean?.data != null) {
+                prj.addAll(pubBean.data)
             } else {
                 ldOuterFailedVisiable.postValue(View.VISIBLE)
                 ldOuterLoadingVisiable.postValue(View.GONE)
@@ -121,7 +118,7 @@ class HomeVM: ViewModel() {
         ThreadPool.network.execute {
             data.clear()
             ldListRefresh.postValue(null)
-            cid = prj[firstTab]?.children?.get(poi)?.id?: 0
+            cid = prj[poi].id
             page = 0
 
             ldInnerFailedVisiable.postValue(View.GONE)
@@ -130,7 +127,7 @@ class HomeVM: ViewModel() {
 
             // 请求网络
             val prjBean = NetRequest.get(
-                "https://www.wanandroid.com/article/list/$page/json?cid=$cid",
+                "https://www.wanandroid.com/wxarticle/list/$cid/$page/json",
                 PrjBotBean::class.java)
             if (prjBean?.data?.datas != null) {
                 data.clear()

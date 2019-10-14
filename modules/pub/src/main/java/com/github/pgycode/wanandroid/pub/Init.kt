@@ -1,4 +1,4 @@
-package com.github.pgycode.wanandroid.blog
+package com.github.pgycode.wanandroid.pub
 
 import com.github.pgycode.wanandroid.common.Router
 
@@ -10,7 +10,7 @@ object Init {
 
     @JvmStatic
     fun init() {
-        Router.map["/blog.page"] = "com.github.pgycode.wanandroid.blog.frg.HomeFragment"
+        Router.map["/pub.page"] = "com.github.pgycode.wanandroid.pub.frg.HomeFragment"
     }
 
 

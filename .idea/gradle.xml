@@ -13,7 +13,9 @@
             <option value="$PROJECT_DIR$/modules/blog" />
             <option value="$PROJECT_DIR$/modules/common" />
             <option value="$PROJECT_DIR$/modules/home" />
+            <option value="$PROJECT_DIR$/modules/nav" />
             <option value="$PROJECT_DIR$/modules/plugin" />
+            <option value="$PROJECT_DIR$/modules/pub" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

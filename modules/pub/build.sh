@@ -1,5 +1,5 @@
 ../../gradlew assembleDebug
-adb push build/outputs/apk/debug/blog-debug.apk /storage/emulated/0/Android/data/com.github.pgycode.wanandroid/files/blog.apk
+adb push build/outputs/apk/debug/pub-debug.apk /storage/emulated/0/Android/data/com.github.pgycode.wanandroid/files/pub.apk
 
 # 关闭App
 /Users/haha/Library/Android/sdk/platform-tools/adb shell am force-stop com.github.pgycode.wanandroid

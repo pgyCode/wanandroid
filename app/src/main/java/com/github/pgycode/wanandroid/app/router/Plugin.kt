@@ -14,6 +14,8 @@ object Plugin {
     init {
         map["home"] = File(File(BaseApp.get().getExternalFilesDir(null), "home.apk").absolutePath.replace("/storage/emulated/10", "/storage/emulated/0"))
         map["blog"] = File(File(BaseApp.get().getExternalFilesDir(null), "blog.apk").absolutePath.replace("/storage/emulated/10", "/storage/emulated/0"))
+        map["pub"] = File(File(BaseApp.get().getExternalFilesDir(null), "pub.apk").absolutePath.replace("/storage/emulated/10", "/storage/emulated/0"))
+        map["nav"] = File(File(BaseApp.get().getExternalFilesDir(null), "nav.apk").absolutePath.replace("/storage/emulated/10", "/storage/emulated/0"))
     }
 
     fun get(name: String): File? {

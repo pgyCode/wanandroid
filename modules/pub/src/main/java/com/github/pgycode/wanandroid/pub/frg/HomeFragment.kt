@@ -1,4 +1,4 @@
-package com.github.pgycode.wanandroid.blog.frg
+package com.github.pgycode.wanandroid.pub.frg
 
 import android.content.Intent
 import android.os.Bundle
@@ -15,9 +15,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.androidkun.xtablayout.XTabLayout
 import com.github.pgycode.wanandroid.common.BaseFragment
-import com.github.pgycode.wanandroid.blog.R
-import com.github.pgycode.wanandroid.blog.act.WebviewActivity
-import com.github.pgycode.wanandroid.blog.vm.HomeVM
+import com.github.pgycode.wanandroid.pub.R
+import com.github.pgycode.wanandroid.pub.act.WebviewActivity
+import com.github.pgycode.wanandroid.pub.vm.HomeVM
 import com.github.pgycode.wanandroid.common.GlideUtil
 import com.scwang.smartrefresh.layout.SmartRefreshLayout
 
@@ -40,7 +40,6 @@ class HomeFragment: BaseFragment() {
     private lateinit var refreshLayout: SmartRefreshLayout
 
     private lateinit var tab: XTabLayout
-    private lateinit var tabSecond: XTabLayout
 
     private lateinit var homeVM: HomeVM
 
@@ -63,37 +62,13 @@ class HomeFragment: BaseFragment() {
         tab.setOnTabSelectedListener(object: XTabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: XTabLayout.Tab?) {
                 tab?.let {
-                    homeVM.checkFirstTab(tab.position)
-                    tabSecond.removeAllTabs()
-                    tab.position.let {
-                        for (prj in homeVM.prj[it].children) {
-                            tabSecond.addTab(tabSecond.newTab().setText(prj.name))
-                        }
-                    }
+                    homeVM.checkTab(tab.position);
                 }
             }
 
             override fun onTabUnselected(tab: XTabLayout.Tab?) {}
 
             override fun onTabReselected(tab: XTabLayout.Tab?) {}
-        })
-        tabSecond = view.findViewById(R.id.tab_second)
-        tabSecond.tabMode = XTabLayout.MODE_SCROLLABLE
-        tabSecond.setTabTextColors(0xffe5e5e5.toInt(), 0xffffffff.toInt())
-        tabSecond.setDividerSize(50,20)
-        tabSecond.setDividerColor(0x00000000)
-        tabSecond.setOnTabSelectedListener(object: XTabLayout.OnTabSelectedListener {
-            override fun onTabSelected(tab: XTabLayout.Tab?) {
-                tab?.let {
-                    homeVM.checkTab(tab.position);
-                }
-            }
-
-            override fun onTabUnselected(tab: XTabLayout.Tab?) {
-            }
-
-            override fun onTabReselected(tab: XTabLayout.Tab?) {
-            }
         })
         refreshLayout = view.findViewById(R.id.refreshLayout)
         refreshLayout.setOnRefreshListener { homeVM.downRefresh() }
